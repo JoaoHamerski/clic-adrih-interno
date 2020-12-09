@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:400,600,700&display=swap');
+
+* {
+	font-family: 'Muli', sans-serif;
+}
+
+[href]:hover {
+	text-decoration: none;
+}
+
+[disabled]:hover {
+	cursor: not-allowed;
+}
+
+[data-toggle="tooltip"].disabled-tooltip {
+	&:hover {
+		cursor: not-allowed;
+	}
+
+	& button {
+		pointer-events: none;
+	}
+}
+
+.close {
+	color: $white;
+	opacity: .8;
+	font-weight: 600;
+
+	&:hover {
+		color: color.adjust($white, $lightness: -10%);
+	}
+
+	&:focus {
+		outline: none;
+	}
+}
+
+.wrapper {
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.wrapper .content {
+	width: 100%;
+	min-height: 100vh;
+}
+
+tr.clickable:hover {
+	cursor: pointer;
+}
+
+.card-client .card-client-item-info {
+	font-size: .89rem;
+}

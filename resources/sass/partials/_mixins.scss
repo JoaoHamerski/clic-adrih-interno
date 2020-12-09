@@ -1,0 +1,20 @@
+/// Mixin para adicionar prefixo a uma propriedade
+/// @author Hugo Giraudel
+/// @param {String} $property - Nome da propriedade
+/// @param {*} $value - Valor da propriedade
+/// @param {List} $prefixes (()) - Lista de prefixos para emitir
+@mixin prefix($property, $value, $prefixes: ()) {
+  @each $prefix in $prefixes {
+    #{'-' + $prefix + '-' + $property}: $value;
+  }
+ 
+  #{$property}: $value;
+}
+
+@mixin box-shadow($value) { @include prefix(box-shadow, $value, webkit moz);  }
+@mixin transform($value) { @include prefix(transform, $value, webkit moz o);  }
+@mixin transition-property($value) { @include prefix(transition-property, $value, webkit moz o);  }
+@mixin transition-duration($value) { @include prefix(transition-duration, $value, webkit moz o);  }
+@mixin transition-timing-function($value) { @include prefix(transition-timing-function, $value, webkit moz o);  }
+@mixin animation-duration($value) { @include prefix(animation-duration, $value, webkit moz o);  }
+@mixin animation-fill-mode($value) { @include prefix(animation-fill-mode, $value, webkit moz o);  }

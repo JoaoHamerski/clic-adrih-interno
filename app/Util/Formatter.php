@@ -52,21 +52,41 @@ class Formatter {
 	public static function name($str)
 	{
 		$str = mb_strtolower($str, mb_detect_encoding($str));
-		$str = trim(preg_replace('/\s+/', ' ', $str));
+		$str = self::stripMultipleWhitespaces($str);
 
-		return Helper::ucsentence($str, ['da', 'do', 'das', 'dos', 'de', "d'"]);
+		return Helper::ucsentence($str, ['da', 'do', 'das', 'dos', 'de']);
 	}
+
+	/**
+	 * Substitui multipos espaços em brancos por apenas um espaço em branco
+	 *
+	 * @param string $str
+	 *
+	 * @return return string
+	 **/
+	public static function stripMultipleWhitespaces($str)
+	{
+		return preg_replace('/\s+/', ' ', $str);
+	}	
 
 	/**
 	 * Formata o valor em dinheiro BRL para o formato padrão.
 	 * 
 	 * Ex.: R$ 123,45 => 123.45
 	 * 
-	 * @param string $str
+	 * @param string|numeric $str
+	 *
 	 * @return string or null
 	 */
-	public static function money($str)
+	public static function sanitizeBRL($str)
 	{
+		if ($str === '' || $str === null)
+			return null;
+
+		if (! \Helper::isValueBRL($str)) {
+			return $str;
+		}
+
 		$str = str_replace(' ', '', $str);
 		$str = str_replace('.', '', $str);
 		$str = str_replace(',', '.', $str);
@@ -76,7 +96,7 @@ class Formatter {
 			FILTER_FLAG_ALLOW_FRACTION | FILTER_FLAG_ALLOW_THOUSAND
 		);
 
-		return (! empty($str) ? $str : null);	
+		return ! empty($str) && ($str != '0') ? $str : null;	
 	}
 
 	/**
@@ -103,5 +123,10 @@ class Formatter {
 	public static function bcrypt($str) 
 	{
 		return bcrypt($str);
+	}
+
+	public static function maskMoney($str)
+	{
+		return \Mask::money($str);
 	}
 }

@@ -2,6 +2,7 @@
 	<form @submit.prevent="onSubmit"
           @keypress.enter.prevent="onSubmit"
           @focus.capture="clear($event.target.name)">
+
 		<h6 class="font-weight-bold text-secondary mb-3">Informações pessoais</h6>
 
 		<md-input

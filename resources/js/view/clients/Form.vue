@@ -1,5 +1,5 @@
 <script>
-  import Form from './../util/Form';
+  import Form from './../../util/Form';
 
   export default {
     mixins: [formMixin],
@@ -21,9 +21,9 @@
       onSubmit() {
         this.form.isLoading = true;
 
-        if (this.isEdit)
+        if (this.isEdit) {
           this.update();
-        else
+        } else 
           this.store();
       },
 
@@ -33,20 +33,33 @@
             window.location.href = response.redirect;
           })
           .catch(error => {
-            toastr.error('Verifique os campos do formulário.');
+            toast.error('Verifique os campos do formulário.');
             this.form.isLoading = false;
           });
       },
 
       update() {
-        this.form.submit('patch', this.$helpers.getLocationURL())
+        this.form.submit('patch', window.location.href)
           .then(response => {
-            window.location.href = response.redirect;
+            if (response.refresh) {
+              window.location.href = response.redirect;
+
+              return;
+            } 
+
+            EventBus.$emit(
+              'update-dynamic-view', 
+              'clientDetails', 
+              response.redirect + '/get-client-details-view'
+            );
+            
+            this.$parent.close();
+            toast.success('Dados atualizados com sucesso!');
           })
           .catch(error => {
-            toastr.error('Verifique os campos do formulário.');
-            this.form.isLoading = false;
-          });
+            toast.error('Verifique os campos do formulário.');
+          })
+          .then(() => { this.form.isLoading = false });
       }
     },
     mounted() {

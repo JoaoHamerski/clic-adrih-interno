@@ -3,8 +3,10 @@
 }
 
 .sidebar-wrapper.is-active {
-	& +.content {
-		margin-left: $sidebar-width;
+	@include media-breakpoint-up(sm) {
+		& +.content {
+			margin-left: $sidebar-width;
+		}
 	}
 
 	.sidebar {
@@ -59,19 +61,15 @@
 	}
 }
 
-@include media-breakpoint-down(xs) {
-	.sidebar.is-active + .content {
-		margin-left: 0; 
-	}
-
+@include media-breakpoint-down(sm) {
 	.sidebar {
-		background-color: rgba(0, 0, 0, .95);
+		background-color: $dark;
 		z-index: 1020;
 		min-width: 100%;
 		max-width: 100%;
 		margin-left: -100%;
 		overflow: hidden;
-		transition: none;
+		transition: margin-left .25s;
 	}
 }
 
@@ -96,5 +94,19 @@
 	[data-toggle="collapse"] .icon {
 		transition: transform .2s;
 		transform: rotate(90deg);
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.accordion-sidebar {
+		text-align: center;
+
+		i {
+			margin-bottom: .25rem;
+		}
+
+		li > a {
+			font-size: 1.15rem !important;
+		}
 	}
 }

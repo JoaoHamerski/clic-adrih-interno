@@ -14,7 +14,11 @@ class Errors {
 	}
 
 	any() {
-		return Object.keys(this.errors).length > 0;
+		return this.count() > 0;
+	}
+
+	count() {
+		return Object.keys(this.errors).length;
 	}
 
 	clear(field = null) {

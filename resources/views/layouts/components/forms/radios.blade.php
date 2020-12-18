@@ -3,6 +3,7 @@
 		<input type="radio" 
 			id="{{ $radio['id'] }}" 
 			name="{{ $name }}"
+			@if (isset($disabled) && $disabled) disabled="disabled" @endif
 			@isset($radio['value']) value="{{ $radio['value'] }}" @endisset
 			@isset($radio['attributes']) {!! Helper::renderAttributes($radio['attributes']) !!} @endisset
 			@if(isset($radio['checked']) && $radio['checked']) checked="checked" @endisset

@@ -13,6 +13,10 @@
 
 <body class="bg-light">
   <div id="app">
+    @if (session()->exists('message'))
+      <toast type="{{ session()->get('type') }}" message="{{ session()->get('message') }}"></toast>
+    @endif
+    
     <div class="wrapper">
       @auth
         @include('layouts.sidebar')

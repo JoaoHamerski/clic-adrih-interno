@@ -2,8 +2,7 @@
 	<div class="form-group form-material-group" :class="{ 'active' : isActive }">	
 		<div :data-toggle="isDisabled ? 'tooltip' : false"
 			:title="isDisabled ? disabledMessage : false" 
-			:class="{'input-group': showInputGroup}">
-			<slot name="input-prepend"></slot>
+			:class="{'input-group': showInputGroup || btnToday}">
 
 			<masked-input class="form-control"
 				ref="maskedInput" 
@@ -11,6 +10,7 @@
 				:type="inputType" 
 				:id="id"
 				:disabled="isDisabled"
+				:autocomplete="autocomplete"
 				:name="name"
 				:value="value"
 				:placeholder="placeholder"
@@ -18,7 +18,8 @@
 				:pipe="pipe"
 				:keep-char-positions="keepCharPositions"
 				:guide="false"
-				@input.native="$emit('input', $event.target.value);">
+				v-on="inputVOn"
+				@input="$emit('input', $event);">
 			</masked-input>
 
 			<label v-if="label" :for="id">{{ label }} 
@@ -31,6 +32,10 @@
 					<i v-if="inputType == 'text'" class="fas fa-eye fa-fw"></i>
 					<i v-else class="fas fa-eye-slash fa-fw"></i>
 				</button>
+			</div>
+
+			<div v-if="btnToday" class="input-group-append">
+				<button class="btn btn-outline-primary" @click.prevent="today()">HOJE</button>
 			</div>
 
 			<slot name="input-append"></slot>
@@ -49,9 +54,12 @@
 		components: { MaskedInput },
 		props: {
 			id: {},
-			value: { default: '' },
+			autocomplete: { default: false },
+			inputVOn: { default: false },
 			name: {}, 
+			btnToday: {},
 			label: {}, 
+			value: {},
 			disabled: { default: false },
 			disabledMessage: {},
 			mask: { default: false },
@@ -93,9 +101,13 @@
 
 				input.focus();
 
-				setTimeout(() => {
-					input.setSelectionRange(length, length);
-				}, 0);
+				this.$nextTick(() => { input.setSelectionRange(length, length) });
+			},
+			today() {
+				let today = moment().format('DD/MM/YYYY');
+				this.$refs.maskedInput.$emit('input', today);
+
+				this.focusInput();
 			}
 		},
 		mounted() {

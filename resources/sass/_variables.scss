@@ -36,10 +36,15 @@ $border-radius: .125rem;
 $border-radius-lg: .15rem;
 $border-radius-sm: .1rem;
 
+// BUTTONS
 $btn-font-size: .85rem;
 $btn-font-size-sm: $btn-font-size * .875;
 $btn-font-size-lg: $btn-font-size * 1.25;
 
+// VUE DATE PICK COLOR THEME
+$vdpColor: $blue;
+
+// GENERAL NEW COLOR THEMES
 $theme-colors: (
 	"pink": $pink,
 	"orange": $orange

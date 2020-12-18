@@ -6,7 +6,7 @@
       <div class="header mt-3 px-3">
         <i class="fas fa-user-shield fa-3x mb-3"></i>
 
-        <h5>{{ username }}</h5>
+        <h5><slot name="username"></slot></h5>
 
         <hr style="border-color: rgba(255, 255, 255, .4)">
       </div>
@@ -23,12 +23,11 @@
 <script>
   export default {
     props: {
-      username: {},
-      active: { type: Boolean, default: false },
-      enableCookie: { type: Boolean, default: false },
+      active: { type: Boolean, default: false }
     },
     data() {
       return {
+        enableCookie: window.innerWidth > 766,
         isActive: this.active
       }
     },

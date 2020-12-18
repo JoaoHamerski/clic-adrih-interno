@@ -39,8 +39,7 @@
             <tr>
               <th>Nome</th>
               <th>Telefone</th>
-              <th>Cidade</th>
-              <th>Endereço</th>
+              <th>Devendo</th>
             </tr>
           </thead>
 
@@ -51,13 +50,16 @@
                   onclick="window.location = this.getAttribute('data-url')">
                 <td> {{ $client->name }} </td>
                 <td> {{ Mask::phone($client->getPhone()) ?? '[não informado]' }} </td>
-                <td> {{ $client->city ?? '[não informado]' }}</td>
-                <td> {{ $client->address ?? '[não informado]' }}</td>
+                <td class="{{ $client->getTotalOwing() > 0 ? 'text-danger' : '' }}">{{ Mask::money($client->getTotalOwing()) }}</td>
               </tr>
             @endforeach
           </tbody>
         </table>
       </div>
     </div>
+  </div>
+
+  <div class="mt-2">
+    {{ $clients->links() }}
   </div>
 @endsection

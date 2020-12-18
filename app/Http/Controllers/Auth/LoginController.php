@@ -48,6 +48,11 @@ class LoginController extends Controller
             return $response;
         }
 
+        \Helper::flash([
+            'type' => 'success',
+            'message' => \Helper::getComplimentByTime()
+        ]);
+
         return $request->wantsJson()
                     ? response()->json(['redirect' => $this->redirectPath()], 200)
                     : redirect()->intended($this->redirectPath());

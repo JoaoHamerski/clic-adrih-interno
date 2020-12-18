@@ -2,6 +2,8 @@
 
 namespace App\Util;
 
+use Carbon\Carbon;
+
 class Helper {
 	/**
 	 * Converte a primeira letra de cada palavra de uma sentença 
@@ -56,7 +58,7 @@ class Helper {
 			return strtotime($datetime);
 		}
 
-		if (is_object($datetime) && $datetime instanceof \Carbon\Carbon) {
+		if (is_object($datetime) && $datetime instanceof Carbon) {
 			return $datetime->getTimestamp();
 		}
 
@@ -171,5 +173,60 @@ class Helper {
 		}
 
 		return $attr;
+	}
+
+	/**
+	 * Verifica se o valor passado é em formato monetário BRL.
+	 * 
+	 * @param string $str 
+	 *
+	 * @return boolean
+	 **/
+	public static function isValueBRL($str) 
+	{
+		return !! preg_match('/^R\$\ ?(\d{1,3}(\.\d{3})*|\d+)(\,\d{2})?$/', $str);
+	}
+
+	/**
+	 * Emite várias flash messages passadas em forma de array.
+	 *
+	 * @param array $data
+	 *
+	 * @return void
+	 **/
+	public static function flash(array $data)
+	{
+		foreach ($data as $key => $value) {
+			session()->flash($key, $value);
+		}
+	}
+
+	/**
+	 * Retorna uma mensagem de cumprimento de acordo com a hora do dia,
+	 * tendo como padrão de comparação a hora atual. 
+	 *
+	 * @param \Carbon\Carbon $datetime
+	 *
+	 * @return string
+	 **/
+	public static function getComplimentByTime($datetime = null)
+	{
+		if ($datetime === null)
+			$datetime = Carbon::now();
+
+		$carbon5h30m = Carbon::createFromTimeString('05:30');
+		$carbon12h = Carbon::createFromTimeString('12:00');
+		$carbon18h = Carbon::createFromTimeString('18:00');
+		$carbon24h = Carbon::createFromTimeString('24:00');
+
+		if ($datetime->between($carbon5h30m, $carbon12h)) {
+			return 'Bom dia, boas-vindas novamente.';
+		} else if ($datetime->between($carbon12h, $carbon18h)) {
+			return 'Boa tarde, boas-vindas novamente.';
+		} else if ($datetime->between($carbon18h, $carbon24h)) {
+			return 'Boa noite, boas-vindas novamente.';
+		} else {
+			return 'Boa madrugada, você deveria estar dormindo.';
+		}
 	}
 }

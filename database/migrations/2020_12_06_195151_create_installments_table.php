@@ -16,7 +16,7 @@ class CreateInstallmentsTable extends Migration
         Schema::create('installments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id');
-            $table->decimal('price', 10, 4)->nullable();
+            $table->decimal('value', 10, 4)->nullable();
             $table->date('due_date');
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();

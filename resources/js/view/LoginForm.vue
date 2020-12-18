@@ -21,7 +21,7 @@
           })
           .catch(error => {
             this.form.isLoading = false;
-            toastr.error("Por favor, verifique as credenciais informadas.");
+            toast.error("Por favor, verifique as credenciais informadas.");
 
             if (this.form.errors.any()) {
               this.form.password = '';

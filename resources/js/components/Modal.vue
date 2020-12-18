@@ -35,6 +35,9 @@
     },
 
     methods: {
+      close() {
+        $(this.$el).modal('hide');
+      },
       focusRequestedElement(element) {
         let vm = this;
 

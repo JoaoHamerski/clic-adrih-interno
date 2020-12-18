@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasSyncRelation;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,10 +10,30 @@ use Illuminate\Database\Eloquent\Model;
 
 class Client extends Model
 {
-    use HasFactory, HasSlug;
+    use HasFactory, HasSlug, HasSyncRelation;
 
     protected $guarded = ['cpf', 'cnpj', 'person_type', 'phone'];
     
+    /**
+     * Um cliente tem muitos pagamentos de muitos pedidos
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function payments()
+    {
+        return $this->hasManyThrough(Payment::class, Order::class);
+    }
+    
+    public function phones()
+    {
+        return $this->hasMany(Phone::class);
+    }   
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     /**
      * Get the options for generating the slug.
      */
@@ -33,6 +54,11 @@ class Client extends Model
         return 'slug';
     }
 
+    /**
+     * Retorna o número de telefone principal do cliente
+     *
+     * @return string 
+     **/
     public function getPhone()
     {
     	if ($phone = $this->phones()->where('is_main', 1)->first()->number ?? null) {
@@ -40,6 +66,19 @@ class Client extends Model
         }
 
         return $this->phones()->first()->number ?? null;
+    }
+
+    /**
+     * Retorna os números secundários cadastrados do cliente.
+     *
+     * @return 
+     **/
+    public function getSecondaryPhones()
+    {
+        return $this->phones()
+            ->where('number', '!=', $this->getPhone())
+            ->get()
+            ->pluck('number');
     }
 
     public function getPersonType()
@@ -50,41 +89,17 @@ class Client extends Model
         return strlen($this->cpf_cnpj) == 11 ? 'cpf' : 'cnpj';
     }
 
-public function updatePhones(array $requestPhones)
-{
-    $phoneIds = $this->phones->pluck('id')->toArray();
-    $requestPhoneIds = [];
-
-    foreach ($requestPhones as $requestPhone) {
-        if (isset($requestPhone['id']) && in_array($requestPhone['id'], $phoneIds)) {
-            $requestPhoneIds[] = $requestPhone['id'];
-
-            $this->phones()
-                ->where('id', $requestPhone['id'])
-                ->update(\Arr::except($requestPhone, ['created_at', 'updated_at']));
-        } else {
-            $this->phones()
-                ->create(\Arr::except($requestPhone, ['created_at', 'updated_at']));
-        }
+    public function getTotalOwing()
+    {
+        return bcsub(
+            sprintf('%.2f', $this->orders()->sum('price')), 
+            sprintf('%.2f', $this->payments()->sum('value')), 
+            2
+        );
     }
-
-    if (! empty($idsToDelete = array_diff($phoneIds, $requestPhoneIds))) {
-        $this->phones()->whereIn('id', $idsToDelete)->delete();
-    }
-}
 
     public function path()
     {
         return route('clients.show', $this);
-    }
-
-    public function phones()
-    {
-    	return $this->hasMany(Phone::class);
-    }	
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
     }
 }

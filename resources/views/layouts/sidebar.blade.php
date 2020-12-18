@@ -1,4 +1,6 @@
-<sidebar :enable-cookie="true" username="{{ Auth::user()->fullname }}">
+<sidebar>
+  <template #username>{{ Auth::user()->fullname }}</template>
+
   <sidebar-item
     icon="fa-users"
     icon-color="pink"
@@ -8,10 +10,13 @@
   <sidebar-item
     icon="fa-boxes"
     icon-color="pink"
-    href=""
+    href="{{ route('orders.index') }}"
     :active="{{ Request::is('pedidos*') ? 'true' : 'false' }}">Pedidos</sidebar-item>
 
   <hr class="my-2">
 
-  <sidebar-item icon="fa-sign-out-alt" icon-color="pink" href="{{ route('auth.logout') }}">Sair</sidebar-item>
+  <sidebar-item 
+    icon="fa-sign-out-alt" 
+    icon-color="pink" 
+    href="{{ route('auth.logout') }}">Sair</sidebar-item>
 </sidebar>

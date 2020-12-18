@@ -1,25 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Muli:400,600,700&display=swap');
 
-* {
-	font-family: 'Muli', sans-serif;
-}
+* { font-family: 'Muli', sans-serif; }
 
-[href]:hover {
-	text-decoration: none;
-}
+[href]:hover { text-decoration: none ; }
 
-[disabled]:hover {
-	cursor: not-allowed;
-}
+[disabled]:hover { cursor: not-allowed; }
 
 [data-toggle="tooltip"].disabled-tooltip {
-	&:hover {
-		cursor: not-allowed;
-	}
-
-	& button {
-		pointer-events: none;
-	}
+	&:hover { cursor: not-allowed; }
+	& button { pointer-events: none; }
 }
 
 .close {
@@ -47,10 +36,45 @@
 	min-height: 100vh;
 }
 
-tr.clickable:hover {
+.clickable:hover {
 	cursor: pointer;
 }
 
 .card-client .card-client-item-info {
 	font-size: .89rem;
+}
+
+.loading {
+  position: absolute;
+  z-index: 2000;
+  overflow: visible;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, .3);
+
+  [class*="spinner"] {
+  	position: absolute;
+  	top: 0;
+  	left: 0;
+  	bottom: 0;
+  	right: 0;
+  	margin: auto;
+  }
+}
+
+.swal2-popup {
+	border-radius: 1px !important;
+	border: 1px solid $light !important;
+}
+
+.swal2-content {
+	font-size: .9rem;
+	margin-bottom: 1rem !important;
+}
+
+.swal2-icon {
+	border: none !important;
 }

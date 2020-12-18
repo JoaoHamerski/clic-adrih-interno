@@ -135,9 +135,15 @@ return [
             'required' => 'Por favor, informe um nome.',
             'min' => 'O nome deve ter no mínimo :min letras',
         ],
+        'price' => [
+            'required' => 'Por favor, informe o preço.'
+        ],
         'date' => [
             'required' => 'Por favor, informe uma data',
             'date' => 'A data informada é inválida.'
+        ],
+        'value' => [
+            'required' => 'Por favor, informe um valor'
         ],
         'installments.*.value' => [
             'required' => 'Informe o valor desta parcela'

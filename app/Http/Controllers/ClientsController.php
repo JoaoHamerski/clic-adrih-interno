@@ -13,7 +13,7 @@ class ClientsController extends Controller
     public function index()
     {
     	return view('clients.index', [
-            'clients' => Client::latest()->get()
+            'clients' => Client::latest()->paginate(10)
         ]);
     }
 
@@ -29,6 +29,11 @@ class ClientsController extends Controller
 
         $client->phones()->createMany(collect($data['phone'])->where('number', '!=', ''));
 
+        \Helper::flash([
+            'type' => 'success',
+            'message' => 'Cliente criado com sucesso!'
+        ]);
+
         return response()->json([
             'message' => 'success',
             'redirect' => route('clients.index')
@@ -37,7 +42,10 @@ class ClientsController extends Controller
 
     public function show(Client $client)
     {
-        return view('clients.show', compact('client'));
+        return view('clients.show', [
+            'client' => $client,
+            'orders' => $client->orders()->latest()->paginate(10)
+        ]);
     }
 
     public function patch(Client $client, Request $request)
@@ -50,12 +58,33 @@ class ClientsController extends Controller
         $data['cpf_cnpj'] = $data[$data['person_type']];
 
         $client->update($data);
-        $client->updatePhones(collect($data['phone'])->where('number', '!=', '')->toArray());
+        $client->sync(
+            collect($data['phone'])->where('number', '!=', '')->toArray(),
+            'phones'
+        );
+
+        return response()->json([
+            'refresh' => $client->wasChanged('slug'),
+            'message' => 'success',
+            'redirect' => route('clients.show',[
+                'client' => $client,
+                'page' => $request->query('page')
+            ])
+        ]);
+    }
+
+    public function destroy(Client $client)
+    {
+        $client->delete();
+
+        \Helper::flash([
+            'type' => 'success', 'message' => 'Cliente deletado com sucesso!'
+        ]);
 
         return response()->json([
             'message' => 'success',
-            'redirect' => route('clients.show', $client)
-        ]);
+            'redirect' => route('clients.index')
+        ], 200);
     }
 
     public function getClient(Client $client)
@@ -71,6 +100,14 @@ class ClientsController extends Controller
                 'address' => $client->address
             ]
         ], 200);
+    }
+
+    public function getClientDetailsView(Client $client)
+    {
+        // sleep(5);
+        return view('clients._client-details', [
+            'client' => $client
+        ])->render();
     }
 
     public function getFormattedData(array $data)

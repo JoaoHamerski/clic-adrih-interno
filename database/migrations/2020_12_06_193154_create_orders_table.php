@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
 
             $table->foreign('client_id')
                 ->references('id')
-                ->on('users')
+                ->on('clients')
                 ->onDelete('cascade');
         });
     }

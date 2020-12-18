@@ -1,0 +1,22 @@
+// Correção do alinhamento da popup do calendário com os inputs do sistema
+.vdpFloating.vdpPositionLeft { left: inherit !important }
+.vdpFloating.vdpPositionTop { top: 40px !important }
+.vdp-toggle-calendar-enter-active.vdpPositionReady { 
+	transform-origin: top left; 
+	animation: vdpToggleCalendar .1s;
+}
+
+// Correção na fonte de elementos filhos do component vue-date-pick
+.vdpComponent { font-size: inherit !important; }
+.vdpComponent .vdpInnerWrap {
+	font-size: 10px;
+}
+
+// Ajustes no tempo de animação
+.vdp-toggle-calendar-leave-active { animation: vdpToggleCalendar .05s reverse }
+.vdp-toggle-calendar-enter-active.vdpPositionFixed { animation: vdpFadeCalendar .1s }
+.vdp-toggle-calendar-leave-active.vdpPositionFixed { animation: vdpFadeCalendar .05s reverse }
+
+
+// Ajuste no border-radius da data selecionada
+.vdpCellContent { border-radius: .1rem !important }

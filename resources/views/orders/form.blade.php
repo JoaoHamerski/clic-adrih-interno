@@ -118,9 +118,8 @@
 			</h6>
 
 			<div v-for="(installment, index) in form.installments" 
-				class="form-row d-flex align-items-baseline">
-				
-				<h5 class="text-center font-weight-bold text-primary" style="width: 35px">
+				class="form-row d-flex flex-column flex-md-row align-items-baseline mt-4 mt-md-0">
+				<h5 class="text-center mx-auto font-weight-bold text-primary">
 					@{{ index + 1 }}ª
 				</h5>
 
@@ -146,11 +145,13 @@
 					disabled-message="Não é possível alterar parcelas já pagas"
 					:error-message="form.errors.get(`installments.${index}.due_date`)"></md-input>	
 
-				<button class="btn btn-outline-danger" 
-					:disabled="installment.paid_at"
-					@click.prevent="deleteInstallment(index)">
-					<i class="fas fa-trash-alt"></i>
-				</button>
+				<div class="form-group form-md-group col-md-1">
+					<button style="height: 40px;" class="btn btn-block btn-outline-danger" 
+						:disabled="installment.paid_at"
+						@click.prevent="deleteInstallment(index)">
+						<i class="fas fa-trash-alt"></i>
+					</button>
+				</div>
 			</div>
 
 			<div class="text-center my-3">

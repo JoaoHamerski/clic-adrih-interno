@@ -2198,7 +2198,6 @@ __webpack_require__.r(__webpack_exports__);
     today: function today() {
       var today = moment().format('DD/MM/YYYY');
       this.$refs.maskedInput.$emit('input', today);
-      this.focusInput();
     }
   },
   mounted: function mounted() {

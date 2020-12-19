@@ -106,8 +106,6 @@
 			today() {
 				let today = moment().format('DD/MM/YYYY');
 				this.$refs.maskedInput.$emit('input', today);
-
-				this.focusInput();
 			}
 		},
 		mounted() {

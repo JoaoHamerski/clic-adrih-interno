@@ -1,5 +1,4 @@
-<modal id="modalPayment" color="primary" modal-dialog-class="modal-dialog-centered" 
-	v-on:modal-closing="this.console.log('buceao')">
+<modal id="modalPayment" color="primary" modal-dialog-class="modal-dialog-centered">
 	<template #header>
 		<i class="fas fa-dollar-sign fa-fw"></i>
 		Efetuar pagamento

@@ -47,4 +47,5 @@ Vue.component('client-form', require('./view/clients/Form').default);
 Vue.component('order-form', require('./view/orders/Form').default);
 Vue.component('order-installments', require('./view/orders/Installments').default);
 Vue.component('order-cash-form', require('./view/orders/CashForm').default);
+Vue.component('my-account-form', require('./view/my-account/Form').default);
 

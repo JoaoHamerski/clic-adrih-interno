@@ -13,6 +13,12 @@
     href="{{ route('orders.index') }}"
     :active="{{ Request::is('pedidos*') ? 'true' : 'false' }}">Pedidos</sidebar-item>
 
+  <sidebar-item
+    icon="fa-user-circle"
+    icon-color="pink"
+    href="{{ route('my-account.show') }}"
+    :active="{{ Request::is('minha-conta*') ? 'true' : 'false' }}">Minha conta</sidebar-item>
+
   <hr class="my-2">
 
   <sidebar-item 

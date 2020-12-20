@@ -6,6 +6,7 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\InstallmentsController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\Auth\LoginController;
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,12 @@ use App\Http\Controllers\Auth\LoginController;
 
 Route::middleware('auth')->group(function() {
   Route::get('/', [HomeController::class, 'index'])->name('home');
+
+  Route::name('my-account.')->group(function() {
+    Route::get('/minha-conta', [MyAccountController::class, 'index'])->name('show');
+    Route::post('/minha-conta', [MyAccountController::class, 'patch'])->name('patch');
+    Route::get('/minha-conta/get-data', [MyAccountController::class, 'getData']);
+  });
 
   Route::name('clients.')->group(function() {
   	Route::get('/clientes', [ClientsController::class, 'index'])->name('index');

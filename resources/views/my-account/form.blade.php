@@ -21,14 +21,14 @@
 				label="Nova senha"
 				v-model="form.password"
 				type="password"
-				autocomplete="no"
+				autocomplete="chrome-off"
 				:error-message="form.errors.get('password')"></md-input>
 
 			<md-input class="col mb-1"
 				name="password_confirmation"
 				label="Confirme a senha"
 				type="password"
-				autocomplete="no"
+				autocomplete="chrome-off"
 				v-model="form.password_confirmation"></md-input>
 		</div>
 

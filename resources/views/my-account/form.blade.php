@@ -37,7 +37,10 @@
 		</div>		
 
 		<div>
-			<button type="submit" class="btn btn-success font-weight-bold">Salvar</button>
+			<button :disabled="form.isLoading" type="submit" class="btn btn-success font-weight-bold">
+				<span v-if="form.isLoading" class="spinner-border spinner-border-sm"></span>
+				Salvar
+			</button>
 		</div>
 	</form>
 </my-account-form>

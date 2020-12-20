@@ -2477,19 +2477,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onSubmit: function onSubmit() {
+      var _this = this;
+
+      this.form.isLoading = true;
       this.form.submit('post', this.$helpers.getLocationURL()).then(function (response) {
         window.location.href = response.redirect;
       })["catch"](function (error) {
+        _this.form.isLoading = false;
         toast.error('Verifique os campos do formulário.');
       });
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     if (this.isEdit) {
       axios.get(this.$helpers.getLocationURL() + '/get-data').then(function (response) {
-        _this.form = new _util_Form__WEBPACK_IMPORTED_MODULE_0__["default"](_this.$helpers.mergeRecursive(_this.form, response.data));
+        _this2.form = new _util_Form__WEBPACK_IMPORTED_MODULE_0__["default"](_this2.$helpers.mergeRecursive(_this2.form, response.data));
       })["catch"](function (error) {
         console.log(error);
       });

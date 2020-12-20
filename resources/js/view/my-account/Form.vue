@@ -18,11 +18,14 @@
 		},
 		methods: {
 			onSubmit() {
+				this.form.isLoading = true;
+
 				this.form.submit('post', this.$helpers.getLocationURL())
 					.then(response => {
 						window.location.href = response.redirect;
 					})
 					.catch(error => {
+						this.form.isLoading = false;
 						toast.error('Verifique os campos do formulário.');
 					});
 			}

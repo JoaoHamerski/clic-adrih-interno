@@ -12,7 +12,7 @@
 					fullname: '',
 					email: '',
 					password: '',
-					passsword_confirmation: ''
+					password_confirmation: ''
 				})
 			}
 		},

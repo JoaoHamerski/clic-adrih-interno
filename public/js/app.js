@@ -2471,7 +2471,7 @@ __webpack_require__.r(__webpack_exports__);
         fullname: '',
         email: '',
         password: '',
-        passsword_confirmation: ''
+        password_confirmation: ''
       })
     };
   },

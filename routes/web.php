@@ -22,9 +22,7 @@ use App\Http\Controllers\Auth\LoginController;
 // Auth::routes();
 
 Route::middleware('auth')->group(function() {
-  Route::get('/', function() {
-    return redirect()->route('clients.index');
-  })->name('home');
+  Route::get('/', [HomeController::class, 'index'])->name('home');
 
   Route::name('my-account.')->group(function() {
     Route::get('/minha-conta', [MyAccountController::class, 'index'])->name('show');

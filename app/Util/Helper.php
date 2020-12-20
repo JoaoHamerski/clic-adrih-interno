@@ -217,7 +217,7 @@ class Helper {
 		$carbon5h30m = Carbon::createFromTimeString('05:30');
 		$carbon12h = Carbon::createFromTimeString('12:00');
 		$carbon18h = Carbon::createFromTimeString('18:00');
-		$carbon24h = Carbon::createFromTimeString('24:00');
+		$carbon24h = Carbon::createFromTimeString('23:59');
 
 		if ($datetime->between($carbon5h30m, $carbon12h)) {
 			return 'Bom dia, boas-vindas novamente.';
@@ -226,7 +226,7 @@ class Helper {
 		} else if ($datetime->between($carbon18h, $carbon24h)) {
 			return 'Boa noite, boas-vindas novamente.';
 		} else {
-			return 'Boa madrugada, você deveria estar dormindo.';
+			return 'Boa madrugada, boas-vindas novamente.';
 		}
 	}
 }

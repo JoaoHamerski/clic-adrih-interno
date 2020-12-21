@@ -4,7 +4,7 @@ Vue.component('date-pick', Vue.prototype.$helpers.mergeRecursive(DatePick, {
 	props: {
 		nextMonthCaption: {type: String, default: 'Próximo mês'},
 		prevMonthCaption: {type: String, default: 'Mês anterior'},
-		setTimeCaption: {type: String, default: 'Selecione hora:'},
+		setTimeCaption: {type: String, default: 'Selecione a hora:'},
 		weekdays: {
 		    type: Array,
 		    default: () => ([
@@ -22,7 +22,7 @@ Vue.component('date-pick', Vue.prototype.$helpers.mergeRecursive(DatePick, {
 	},
 	methods: {
 		 addCloseEvents() {
-            if (!this.closeEventListener) {
+            if (! this.closeEventListener) {
                 this.closeEventListener = e => this.inspectCloseEvent(e);
                 ['click', 'keyup'].forEach(
                     eventName => document.addEventListener(eventName, this.closeEventListener)

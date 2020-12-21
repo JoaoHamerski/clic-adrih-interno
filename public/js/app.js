@@ -2494,8 +2494,6 @@ __webpack_require__.r(__webpack_exports__);
     if (this.isEdit) {
       axios.get(this.$helpers.getLocationURL() + '/get-data').then(function (response) {
         _this2.form = new _util_Form__WEBPACK_IMPORTED_MODULE_0__["default"](_this2.$helpers.mergeRecursive(_this2.form, response.data));
-      })["catch"](function (error) {
-        console.log(error);
       });
     }
   }
@@ -64955,7 +64953,7 @@ Vue.component('date-pick', Vue.prototype.$helpers.mergeRecursive(vue_date_pick__
     },
     setTimeCaption: {
       type: String,
-      "default": 'Selecione hora:'
+      "default": 'Selecione a hora:'
     },
     weekdays: {
       type: Array,

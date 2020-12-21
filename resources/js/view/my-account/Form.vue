@@ -35,9 +35,6 @@
 				axios.get(this.$helpers.getLocationURL() + '/get-data')
 					.then(response => {
 						this.form = new Form(this.$helpers.mergeRecursive(this.form, response.data));
-					})
-					.catch(error => {
-						console.log(error);
 					});
 			}
 		}

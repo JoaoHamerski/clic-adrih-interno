@@ -31,6 +31,10 @@ class EmailController extends Controller
     {
         $request->fulfill();
 
+        \Helper::flash([
+            'type' => 'success', 'message' => 'Parabéns, sua conta foi verificada com sucesso!'
+        ]);
+
         return redirect()->route('clients.index');
     }
 }

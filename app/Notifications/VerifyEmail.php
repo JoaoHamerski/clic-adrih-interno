@@ -50,7 +50,7 @@ class VerifyEmail extends LaravelVerifyEmail
         }
 
         return (new MailMessage)
-            ->subject('Email de verificação - Clic Adrih Interno')
+            ->subject('Email de verificação')
             ->markdown('emails.account-validation', [
                 'verificationUrl' => $verificationUrl
             ]);

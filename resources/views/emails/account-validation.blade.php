@@ -1,7 +1,7 @@
 @component('mail::layout')
   @slot('header')
     @component('mail::header', ['url' => 'https://interno.clicadrih.com/'])
-      {!! file_get_contents('images/clic-adrih.svg') !!}
+      <img src="{{ url('images/clic-adrih-pink.png') }}" alt="Logo da loja Clic Adrih">
     @endcomponent
   @endslot
   

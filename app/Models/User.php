@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -41,6 +42,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::updated(function ($user) {
+            if ($user->wasChanged('email')) {
+                $user->email_verified_at = null;
+                $user->saveQuietly();
+                $user->sendEmailVerificationNotification();
+            }
+        });
+    }
+
     public function firstName()
     {
         return explode(' ', $this->fullname)[0];
@@ -72,5 +89,10 @@ class User extends Authenticatable
         }
 
         return $this->role()->where('name', $role)->exists();
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail);
     }
 }

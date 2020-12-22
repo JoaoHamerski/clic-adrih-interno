@@ -41,6 +41,15 @@ window.toast = {
     });
   },
 
+  info(message) {
+    return swalToastInit.fire({
+      icon: 'info',
+      iconHtml: '<i class="fas fa-info-circle"></i>',
+      title: message,
+      iconColor: '#39a0da'
+    });
+  },
+
   error(message) {
     return swalToastInit.fire({
       icon: 'error',

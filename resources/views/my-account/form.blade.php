@@ -7,13 +7,19 @@
 		<md-input name="fullname"
 			label="Nome"
 			v-model="form.fullname"
-			:error-message="form.errors.get('name')"
+			:error-message="form.errors.get('fullname')"
 		></md-input>
 
 		<md-input name="email"
 			label="E-mail"
 			v-model="form.email"
-			:error-message="form.errors.get('email')"></md-input>
+			:error-message="form.errors.get('email')">
+				<template #helper-message>
+					<small class="form-text text-muted">
+						Caso altere seu e-mail, um novo e-mail de confirmação será enviado.
+					</small>
+				</template>
+			</md-input>
 
 		<div class="form-row">
 			<md-input class="col mb-1"
@@ -33,7 +39,7 @@
 		</div>
 
 		<div class="small text-secondary mb-3">
-			Deixe os campos de senha em branco caso não queira alterá-los.
+			Deixe os campos de senha em branco caso não queira alterá-la.
 		</div>		
 
 		<div>

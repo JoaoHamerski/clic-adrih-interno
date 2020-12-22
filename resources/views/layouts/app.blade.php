@@ -23,6 +23,15 @@
       @endauth
 
       <div class="content">
+        @if (Auth::check() && ! Auth::user()->email_verified_at)
+          <div class="bg-warning p-2">
+            <h6 class="text-white text-center font-weight-bold ml-5 ml-md-0">
+              Por favor, verifique seu email. Caso não tenha recebido o e-mail de verificação, 
+              <a href="{{ route('email.send-verify') }}" class="font-weight-bold text-underline text-white">solicite novamente aqui</a>
+            </h6>
+          </div>
+        @endif
+
         <div class="container">
           @yield('content')
         </div>

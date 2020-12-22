@@ -30,6 +30,15 @@
 					</div>
 
 					<div class="mb-4">
+						<h6 class="font-weight-bold text-secondary">E-mail verificado em</h6>
+						@if ($user->hasVerifiedEmail())
+						<h5>{{ Helper::date($user->email_verified_at, '%d/%m/%Y') }}</h5>
+						@else 
+						<h5>Ainda não verificado</h5>
+						@endif
+					</div>
+
+					<div class="mb-4">
 						<h6 class="font-weight-bold text-secondary">Conta criada em</h6>
 						<h5>{{ Helper::date($user->created_at, '%d/%m/%Y') }}</h5>
 					</div>

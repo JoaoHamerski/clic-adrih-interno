@@ -6,8 +6,10 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\InstallmentsController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\Auth\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,9 +25,13 @@ use App\Http\Controllers\Auth\LoginController;
 
 Route::middleware('auth')->group(function() {
   Route::get('/', [HomeController::class, 'index'])->name('home');
+  Route::get('email', [EmailController::class, 'emailPreview']);
+  
 
-  Route::get('/email', [HomeController::class, 'show']);
-  Route::post('/email', [HomeController::class, 'store']);
+  Route::name('email.')->prefix('email')->group(function() {
+   Route::get('/verificar/{id}/{hash}', [EmailController::class, 'verifyEmail'])->middleware('signed')->name('verify');
+    Route::get('/verificar', [EmailController::class, 'sendVerificationEmail'])->name('send-verify');
+  });
 
   Route::name('my-account.')->group(function() {
     Route::get('/minha-conta', [MyAccountController::class, 'index'])->name('show');

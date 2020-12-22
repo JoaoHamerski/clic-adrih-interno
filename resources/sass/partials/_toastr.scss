@@ -8,9 +8,10 @@
 		font-weight: bold;
 	}
 
-	&.swal2-icon-error .swal2-title { color: $red }
-	&.swal2-icon-warning .swal2-title { color: $orange }
 	&.swal2-icon-success .swal2-title { color: $green }
+	&.swal2-icon-info .swal2-title { color: $blue }
+	&.swal2-icon-warning .swal2-title { color: $orange }
+	&.swal2-icon-error .swal2-title { color: $red }
 }
 
 .swal2-popup.swal2-toast:hover {

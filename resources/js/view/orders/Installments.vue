@@ -8,18 +8,34 @@
 		},
 		methods: {
 			payInstallment(index, installmentId) {
-				this.isLoading = true;
+				let installment = this.installments[index],
+					text = 'Pagando parcela de ' 
+						+ '<strong>' + this.$helpers.formatMoney(installment.value) + '</strong>' 
+						+ ' com vencimento para ' 
+						+ '<strong>' + moment(installment.due_date).format('DD/MM/YYYY') + '</strong>';
 
-				axios.post(this.$helpers.getLocationURL() + '/parcela/' + installmentId + '/pagar')
-					.then(response => {	
-						this.installments[index] = response.data;
-						this.isLoading = false; 
+				swalModal.fire({
+					icon: 'info',
+					iconHtml: '<i class="fas fa-info-circle"></i>',
+					iconColor: '#39a0da',
+					title: 'Você tem certeza?',
+					html: text 
+				}).then(result => {
+					if (result.isConfirmed) {
+						this.isLoading = true;
 
-						EventBus.$emit('update-dynamic-view', ['clientDetails', 'orderDetails']);
-						
-						toast.success('Pagamento realizado com sucesso!');
-					})
-					.catch(error => { toast.error('Erro ao realizar pagamento') });
+						axios.post(this.$helpers.getLocationURL() + '/parcela/' + installmentId + '/pagar')
+							.then(response => {
+								this.installments[index] = response.data;
+
+								EventBus.$emit('update-dynamic-view', ['clientDetails', 'orderDetails']);
+								
+								toast.success('Pagamento realizado com sucesso!');
+
+								this.isLoading = false;
+							});
+					}
+				});
 			}
 		},
 		mounted() {

@@ -41,7 +41,7 @@
 
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" v-model="form.remember" name="remember" class="custom-control-input" id="remember">
-                  <label class="custom-control-label" for="remember">Manter-se conectado</label>
+                  <label class="custom-control-label" for="remember">Lembre-se de mim</label>
                 </div>
 
                 <button :disabled="form.isLoading" class="btn btn-primary btn-block mt-4 font-weight-bold">

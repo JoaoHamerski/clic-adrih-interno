@@ -10,10 +10,12 @@ use Illuminate\Validation\Rule;
 
 class ClientsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $clients = $this->getRequestedQuery($request);
+
     	return view('clients.index', [
-            'clients' => Client::latest()->paginate(10)
+            'clients' => $clients->latest()->paginate(10)
         ]);
     }
 
@@ -85,6 +87,17 @@ class ClientsController extends Controller
             'message' => 'success',
             'redirect' => route('clients.index')
         ], 200);
+    }
+
+    public function getRequestedQuery($request)
+    {
+        $clients = Client::query();
+
+        if ($request->filled('nome')) {
+            $clients->where('name', 'like', '%' . $request->nome . '%');
+        }
+
+        return $clients;
     }
 
     public function getClient(Client $client)

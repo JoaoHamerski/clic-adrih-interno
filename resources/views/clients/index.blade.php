@@ -16,19 +16,36 @@
     </template> 
   </modal>
 
-  <div class="mt-5 mb-2">
+  <div class="mt-5 mb-2 d-flex flex-column flex-md-row justify-content-between">
     <button 
       data-toggle="modal" 
       data-target="#modalNewClient" 
-      class="btn btn-success font-weight-bold">
+      class="btn btn-success font-weight-bold mb-3 mb-md-0">
 
       <i class="fas fa-user-plus fa-fw mr-1"></i>
       NOVO CLIENTE
     </button>
+
+    <div class="form-group mb-0">
+      <form method="GET" action="{{ route('clients.index') }}">
+        <div class="input-group">
+          <input class="form-control" 
+            type="text" 
+            name="nome" 
+            placeholder="Nome do cliente..." 
+            value="{{ request('nome') }}">
+
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary">Buscar</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 
   <div class="card">
-    <div class="card-header bg-primary text-white font-weight-bold">
+    <div class="card-header bg-primary text-white font-weight-bold position-relative">
+      <a class="stretched-link" href="{{ route('clients.index') }}"></a>
       <i class="fas fa-users fa-fw mr-1"></i>Clientes
     </div>
 

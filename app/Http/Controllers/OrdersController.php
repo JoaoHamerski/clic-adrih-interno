@@ -7,13 +7,16 @@ use App\Models\Order;
 use App\Util\Formatter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 class OrdersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $orders = $this->getRequestedQuery($request);
+
         return view('orders.index', [
-            'orders' => Order::latest()->paginate(10)
+            'orders' => $orders->latest()->paginate(10)
         ]);
     }
 
@@ -96,6 +99,19 @@ class OrdersController extends Controller
             'message' => 'success',
             'redirect' => route('clients.show', $client)
         ], 200);
+    }
+
+    public function getRequestedQuery($request)
+    {
+        $orders = Order::query();
+
+        if ($request->filled('nome')) {
+            $orders->whereHas('client', function(Builder $query) use ($request) {
+                $query->where('name', 'like', '%' . $request->nome . '%');
+            });
+        }
+
+        return $orders;
     }
 
     public function getOrder(Client $client, Order $order)

@@ -3,8 +3,27 @@
 @section('Pedidos - ')
 
 @section('content')
-  <div class="card mt-5">
-    <div class="card-header bg-primary">
+    <form class="w-100" method="GET" action="{{ route('orders.index') }}">
+  <div class="mt-5 mb-2 d-flex justify-content-start justify-content-md-end">
+      <div class="form-group mb-0 col col-md-3 px-0">
+        <div class="input-group">
+          <input class="form-control"
+            type="text"
+            name="nome"
+            placeholder="Nome do cliente..."
+            value="{{ request('nome') }}">
+
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary">Buscar</button>
+          </div>
+        </div>
+      </div>
+  </div>
+    </form>
+
+  <div class="card">
+    <div class="card-header bg-primary position-relative">
+      <a class="stretched-link" href="{{ route('orders.index') }}"></a>
       <h6 class="text-white font-weight-bold mb-0">
         <i class="fas fa-boxes fa-fw mr-1"></i>Pedidos
       </h6>

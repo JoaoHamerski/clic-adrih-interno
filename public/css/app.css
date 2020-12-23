@@ -18695,7 +18695,7 @@ select:-webkit-autofill:focus {
 
   .accordion-sidebar li > a .icon {
     position: absolute;
-    left: 5%;
+    left: 10%;
   }
 }
 

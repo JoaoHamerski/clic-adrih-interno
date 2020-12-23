@@ -1,11 +1,14 @@
 <template>
 	<li :class="{ 'active' : active }">
-		<a class="d-flex flex-column flex-sm-row align-items-center" :href="href">
-			<i class="fas fa-fw mr-1"
-			:class="[icon, iconColorClass]"></i>
-			<div>
+		<a :href="href">
+			<span class="icon">
+				<i class="fas fa-fw mr-1"
+				:class="[icon, iconColorClass]"></i>
+			</span>
+
+			<span class="label">
 				<slot></slot>
-			</div>
+			</span>
 		</a>
 	</li>
 </template>

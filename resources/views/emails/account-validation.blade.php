@@ -7,19 +7,19 @@
   
   # Confirme seu e-mail
 
-  Por favor, clique no botão abaixo para efetivar a confirmação da sua conta.
+  Por favor, clique no botão abaixo para fazer a confirmação do seu e-mail.
 
   @component('mail::button', ['url' => $verificationUrl, 'color' => 'primary'])
     VERIFICAR AGORA
   @endcomponent
 
-  @slot('footer')
-    @component('mail::footer')
-    E-mail enviado automaticamente
-    @endcomponent
-  @endslot
-
-  @component('mail::subcopy')
+  @component('mail::subcopy') 
   Caso tenha algum problema ao clicar no botão de confirmação, acesse o link: <span class="break-all"><a href="{{ $verificationUrl }}">{{ $verificationUrl }}</a></span>
   @endcomponent
+
+  @slot('footer')
+    @component('mail::footer')
+    Clic Adrih &bull; {{ Helper::date(\Carbon\Carbon::now(), '%d de %B de %Y') }}
+    @endcomponent
+  @endslot
 @endcomponent

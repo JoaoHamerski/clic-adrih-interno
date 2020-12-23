@@ -21,26 +21,28 @@
 				</template>
 			</md-input>
 
-		<div class="form-row">
-			<md-input class="col mb-1"
+		<div class="form-row d-flex flex-column flex-md-row">
+			<md-input class="col"
 				name="password"
 				label="Nova senha"
 				v-model="form.password"
 				type="password"
 				autocomplete="new-password"
-				:error-message="form.errors.get('password')"></md-input>
+				:error-message="form.errors.get('password')">
+					<template #helper-message>
+						<small class="form-text text-muted">
+							Deixa os campos de senha em branco caso não queira alterá-la
+						</small>
+					</template>
+				</md-input>
 
-			<md-input class="col mb-1"
+			<md-input class="col"
 				name="password_confirmation"
 				label="Confirme a senha"
 				type="password"
 				autocomplete="new-password-confirmation"
 				v-model="form.password_confirmation"></md-input>
 		</div>
-
-		<div class="small text-secondary mb-3">
-			Deixe os campos de senha em branco caso não queira alterá-la.
-		</div>		
 
 		<div>
 			<button :disabled="form.isLoading" type="submit" class="btn btn-success font-weight-bold">

@@ -1,4 +1,4 @@
-<sidebar>
+<sidebar :active="$helpers.isMdScreen()">
   <template #username>{{ Auth::user()->fullname }}</template>
 
   <sidebar-item

@@ -6,9 +6,15 @@ use App\Mail\AccountValidation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Notifications\Messages\MailMessage;
 
 class EmailController extends Controller
 {
+    public function preview()
+    {
+        return (new MailMessage)->markdown('emails.account-validation', ['verificationUrl' => 'asd']);
+    }
+
     public function sendVerificationEmail(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {

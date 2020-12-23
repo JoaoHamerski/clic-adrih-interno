@@ -48,9 +48,9 @@
               <tr class="clickable"
                   data-url="{{ $client->path() }}" 
                   onclick="window.location = this.getAttribute('data-url')">
-                <td> {{ $client->name }} </td>
-                <td> {{ Mask::phone($client->getPhone()) ?? '[não informado]' }} </td>
-                <td class="{{ $client->getTotalOwing() > 0 ? 'text-danger' : '' }}">{{ Mask::money($client->getTotalOwing()) }}</td>
+                <td nowrap="nowrap"> {{ $client->name }} </td>
+                <td nowrap="nowrap"> {{ Mask::phone($client->getPhone()) ?? '[não informado]' }} </td>
+                <td nowrap="nowrap" class="{{ $client->getTotalOwing() > 0 ? 'text-danger' : '' }}">{{ Mask::money($client->getTotalOwing()) }}</td>
               </tr>
             @endforeach
           </tbody>

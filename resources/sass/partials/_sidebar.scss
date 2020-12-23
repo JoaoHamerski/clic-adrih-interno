@@ -97,7 +97,7 @@
 	}
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-down(sm) {
 	.accordion-sidebar {
 		text-align: center;
 
@@ -106,7 +106,18 @@
 		}
 
 		li > a {
+			display: flex;
 			font-size: 1.15rem !important;
+			position: relative;
+
+			.label {
+				justify-self: center;
+			}
+
+			.icon {
+				position: absolute;
+				left: 5%;
+			}
 		}
 	}
 }

@@ -36,12 +36,21 @@
 	min-height: 100vh;
 }
 
+tr.clickable {
+	-webkit-user-select: none !important;
+}
+
 .clickable:hover {
 	cursor: pointer;
 }
 
 .card-client .card-client-item-info {
 	font-size: .89rem;
+}
+
+.pagination-responsive {
+	display: inherit;
+	overflow-x: auto;
 }
 
 .loading {
@@ -81,4 +90,14 @@
 
 .text-underline {
 	text-decoration: underline;
+}
+
+.no-wrap {
+	white-space: nowrap;
+}
+
+@include media-breakpoint-down(md) {
+	tr {
+		font-size: .9rem;
+	}
 }

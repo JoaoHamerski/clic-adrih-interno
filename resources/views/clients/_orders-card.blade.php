@@ -12,7 +12,7 @@
           <tr>
             <th>Nome</th>
             <th>Valor</th>
-            <th>Falta pagar</th>
+            <th nowrap="nowrap">Falta pagar</th>
             <th>Data</th>
           </tr>
         </thead>
@@ -27,7 +27,7 @@
               <td>
                 {{ Mask::money($order->price) }}
                 @if ($order->hasInstallments() && $order->isInstallmentsValueSame())
-                  <small class="text-secondary">
+                  <small class="text-secondary no-wrap">
                   ({{ $order->installments->count() }} x {{ Mask::money($order->installments()->first()->value) }})
                   </small>
                 @elseif($order->hasInstallments())

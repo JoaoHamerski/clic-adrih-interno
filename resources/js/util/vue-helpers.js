@@ -49,5 +49,8 @@ export default {
 	  }
 
 	  return obj1;
+	},
+	isMdScreen() {
+		return window.innerWidth >= 767;
 	}
 }

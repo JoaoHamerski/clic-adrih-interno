@@ -50,29 +50,39 @@
     </div>
 
     <div class="card-body px-0">
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Telefone</th>
-              <th>Devendo</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            @foreach($clients as $client)
-              <tr class="clickable"
-                  data-url="{{ $client->path() }}" 
-                  onclick="window.location = this.getAttribute('data-url')">
-                <td nowrap="nowrap"> {{ $client->name }} </td>
-                <td nowrap="nowrap"> {{ Mask::phone($client->getPhone()) ?? '[não informado]' }} </td>
-                <td nowrap="nowrap" class="{{ $client->getTotalOwing() > 0 ? 'text-danger' : '' }}">{{ Mask::money($client->getTotalOwing()) }}</td>
+      @if ($clients->isEmpty())
+        <div class="text-center text-muted my-4">
+          <i class="fas fa-frown fa-3x mb-4"></i>
+          <h5>Nenhum cliente foi encontrado</h5>
+          <a class="small" href="{{ route('clients.index') }}">
+          <i class="fas fa-arrow-circle-left fa-fw mr-1"></i>  Voltar para lista de clientes
+          </a>
+        </div>
+      @else
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Devendo</th>
               </tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
+            </thead>
+
+            <tbody>
+              @foreach($clients as $client)
+                <tr class="clickable"
+                    data-url="{{ $client->path() }}" 
+                    onclick="window.location = this.getAttribute('data-url')">
+                  <td nowrap="nowrap"> {{ $client->name }} </td>
+                  <td nowrap="nowrap"> {{ Mask::phone($client->getPhone()) ?? '[não informado]' }} </td>
+                  <td nowrap="nowrap" class="{{ $client->getTotalOwing() > 0 ? 'text-danger' : '' }}">{{ Mask::money($client->getTotalOwing()) }}</td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      @endif
     </div>
   </div>
 

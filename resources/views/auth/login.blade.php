@@ -39,6 +39,10 @@
                   v-model="form.password"
                   :error-message="form.errors.get('password')"></md-input>
 
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" v-model="form.remember" name="remember" class="custom-control-input" id="remember">
+                  <label class="custom-control-label" for="remember">Manter-se conectado</label>
+                </div>
 
                 <button :disabled="form.isLoading" class="btn btn-primary btn-block mt-4 font-weight-bold">
                   <span v-if="form.isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

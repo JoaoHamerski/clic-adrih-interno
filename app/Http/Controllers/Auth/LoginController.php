@@ -23,6 +23,7 @@ class LoginController extends Controller
     use AuthenticatesUsers {
         sendLoginResponse as laravelSendLoginResponse;
         validateLogin as laravelValidateLogin;
+        attemptLogin as laravelAttemptLogin;
     }
 
     /**
@@ -43,10 +44,6 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
-
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
 
         \Helper::flash([
             'type' => 'success',
@@ -74,5 +71,18 @@ class LoginController extends Controller
             $this->username() => 'required|string|email',
             'password' => 'required|string',
         ]);
+    }
+
+    /**
+     * Attempt to log the user into the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attempt(
+            $this->credentials($request), $request->remember == true
+        );
     }
 }

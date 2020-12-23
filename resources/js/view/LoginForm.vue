@@ -7,7 +7,8 @@
       return {
         form: new Form({
           email: '',
-          password: ''
+          password: '',
+          remember: ''
         })
       }
     },

@@ -25,7 +25,7 @@ use App\Http\Controllers\Auth\LoginController;
 
 Route::middleware('auth')->group(function() {
   Route::get('/', [HomeController::class, 'index'])->name('home');
-  Route::get('email', [EmailController::class, 'preview']);
+  // Route::get('email', [EmailController::class, 'preview']);
   
   Route::name('email.')->prefix('email')->group(function() {
    Route::get('/verificar/{id}/{hash}', [EmailController::class, 'verifyEmail'])->middleware('signed')->name('verify');

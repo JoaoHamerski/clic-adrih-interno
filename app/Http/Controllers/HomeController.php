@@ -8,31 +8,15 @@ use Illuminate\Support\Facades\Mail;
 class HomeController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Redireciona o usuário para a rota especificada,
+     * replicando as mensagens flash caso existam.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function index()
     {
-        return view('index');
-    }
+        session()->reflash();
 
-    public function show()
-    {
-    	return view('show');
-    }
-
-    public function store(Request $request)
-    {
-    	Mail::raw('Funcionou pra caralho', function($message) use ($request) {
-    		$message->to('joaohamerski@hotmail.com')
-    			->subject('Assunto aqui');
-    	});
-
-    	\Helper::flash([
-    		'type' => 'success', 'message' => 'E-mail enviado com sucesso!'
-    	]);
-
-    	return redirect('email');
+        return redirect()->route('clients.index');
     }
 }

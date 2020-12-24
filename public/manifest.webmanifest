@@ -1,0 +1,22 @@
+{
+  "short_name": "Clic Adrih",
+  "name": "Sistema Interno - Clic Adrih",
+  "description": "Aplicação para gerenciamento interno da loja Clic Adrih",
+  "icons": [
+    {
+      "src": "/images/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/clientes",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#ed1e79"
+}

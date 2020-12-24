@@ -4,8 +4,10 @@
 
 @section('content')
 	
-	<div class="col col-md-9 px-0 mx-auto">
-		<div class="card mt-5">
+	<div class="col col-md-9 px-0 mx-auto mt-5">
+		<btn-install-pwa class="btn btn-outline-primary mb-2">Instalar aplicação</btn-install-pwa>
+
+		<div class="card">
 			<div class="card-header bg-primary">
 				<h6 class="font-weight-bold text-white mb-0">
 					<i class="fas fa-user-circle fa-fw mr-1"></i> Minha conta
@@ -44,8 +46,10 @@
 					</div>
 				</div>
 
-				<div class="d-flex justify-content-between">
-					<a href="#userModal" data-toggle="modal"><i class="fas fa-edit fa-fw mr-1"></i>Alterar dados</a>
+				<div class="d-flex justify-content-between text-center text-md-left flex-column flex-md-row">
+					<a class="mb-2" href="#userModal" data-toggle="modal">
+						<i class="fas fa-edit fa-fw mr-1"></i>Alterar dados
+					</a>
 					
 					<a href="" class="text-danger">
 						<i class="fas fa-trash-alt fa-fw mr-1"></i>Deletar minha conta

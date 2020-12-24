@@ -40,6 +40,7 @@ Vue.component('sidebar-button', require('./components/sidebar/SidebarButton').de
 Vue.component('modal', require('./components/Modal.vue').default);
 Vue.component('dynamic-view', require('./components/DynamicView.vue').default);
 Vue.component('toast', require('./components/Toast.vue').default);
+Vue.component('btn-install-pwa', require('./components/BtnInstallPwa.vue').default);
 
 // Views
 Vue.component('login-form', require('./view/LoginForm').default);

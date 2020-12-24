@@ -22,6 +22,8 @@ class OrdersController extends Controller
 
 	public function show(Client $client, Order $order)
 	{
+        $this->authorize('access', [$order, $client]);
+
 		return view('orders.show', compact('client', 'order'));
 	}
 
@@ -34,6 +36,8 @@ class OrdersController extends Controller
 
     public function edit(Client $client, Order $order)
     {
+        $this->authorize('access', [$order, $client]);
+
         return view('orders.edit', compact('order'));
     }
 
@@ -61,6 +65,8 @@ class OrdersController extends Controller
 
     public function patch(Client $client, Order $order, Request $request)
     {
+        $this->authorize('access', [$order, $client]);
+
         $this->validator(
             $data = $this->getFormattedData($request->all()),
             $order
@@ -89,6 +95,8 @@ class OrdersController extends Controller
 
     public function destroy(Client $client, Order $order)
     {
+        $this->authorize('access', [$order, $client]);
+        
         $order->delete();
 
         \Helper::flash([

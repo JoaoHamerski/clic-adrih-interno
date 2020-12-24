@@ -19,7 +19,13 @@
             <h5 class="text-center text-secondary text-uppercase font-weight-bold">
                 @yield('message')
             </h5>
-            <small><a href="{{ route('home') }}">Voltar para página inicial</a></small>
+
+            <small>
+                <a href="{{ route('home') }}">
+                    <i class="fas fa-arrow-alt-circle-left fa-fw mr-1"></i>Voltar para página inicial
+                </a>
+            </small>
+
             </div>
         </div>
     </div>

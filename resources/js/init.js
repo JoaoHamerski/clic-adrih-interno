@@ -13,3 +13,10 @@ moment.locale('pt-BR');
 $('#app').tooltip({
   selector: '[data-toggle="tooltip"]'
 });
+
+// Service Worker
+window.addEventListener('load', () => {
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('_service-worker.js');
+	}
+});

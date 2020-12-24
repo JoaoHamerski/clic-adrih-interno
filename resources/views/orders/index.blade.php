@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('Pedidos - ')
+@section('title', 'Pedidos - ')
 
 @section('content')
     <form class="w-100" method="GET" action="{{ route('orders.index') }}">

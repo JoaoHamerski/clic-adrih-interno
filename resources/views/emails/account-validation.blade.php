@@ -9,12 +9,12 @@
 
   Por favor, clique no botão abaixo para fazer a confirmação do seu e-mail.
 
-  @component('mail::button', ['url' => $verificationUrl, 'color' => 'primary'])
+  @component('mail::button', ['url' => $url, 'color' => 'primary'])
     VERIFICAR AGORA
   @endcomponent
 
   @component('mail::subcopy') 
-  Caso tenha algum problema ao clicar no botão de confirmação, acesse o link: <span class="break-all"><a href="{{ $verificationUrl }}">{{ $verificationUrl }}</a></span>
+  Caso tenha algum problema ao clicar no botão de confirmação, acesse o link: <span class="break-all"><a href="{{ $url }}">{{ $url }}</a></span>
   @endcomponent
 
   @slot('footer')

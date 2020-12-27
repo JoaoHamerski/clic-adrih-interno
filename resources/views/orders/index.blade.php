@@ -57,8 +57,11 @@
                   data-url="{{ $order->path() }}"
                   onclick="window.location.href = this.getAttribute('data-url')">
                   <td>{{ $order->client->name }}</td>
+
                   <td>{{ $order->name }}</td>
+
                   <td>{{ Mask::money($order->price) }}</td>
+
                   @if ($order->isPaid())
                     <td nowrap="nowrap" class="text-success">
                       <i class="fas fa-check-circle fa-fw mr-1"></i> Já pago

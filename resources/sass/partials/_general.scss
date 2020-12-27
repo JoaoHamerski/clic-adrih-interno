@@ -80,3 +80,9 @@ tr.clickable {
 @include media-breakpoint-down(md) {
 	.table tr { font-size: .9rem }
 }
+
+@include media-breakpoint-up(md) {
+	.modal-dialog.modal-dialog-md {
+		max-width: 650px;
+	}
+}

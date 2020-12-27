@@ -10,37 +10,11 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class EmailController extends Controller
 {
+    /**
+     * Método de testes para pre-visualizar o template de emails criados
+     **/
     public function preview()
     {
-        return (new MailMessage)->markdown('emails.account-validation', ['verificationUrl' => 'asd']);
-    }
-
-    public function sendVerificationEmail(Request $request)
-    {
-        if ($request->user()->hasVerifiedEmail()) {
-            \Helper::flash([
-                'type' => 'info', 'message' => 'Seu e-mail já é verificado!'
-            ]);
-        } else {
-    	   $request->user()->sendEmailVerificationNotification();
-
-        	\Helper::flash([
-        		'type' => 'success', 'message' => 'E-mail de verificação enviado'
-        	]);
-        }
-
-
-    	return back();
-    }
-
-    public function verifyEmail(EmailVerificationRequest $request)
-    {
-        $request->fulfill();
-
-        \Helper::flash([
-            'type' => 'success', 'message' => 'Parabéns, sua conta foi verificada com sucesso!'
-        ]);
-
-        return redirect()->route('clients.index');
+        return (new MailMessage)->markdown('emails.password-reset', ['url' => 'asd']);
     }
 }

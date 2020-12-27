@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 class VerificationController extends Controller
 {
@@ -19,7 +21,9 @@ class VerificationController extends Controller
     |
     */
 
-    use VerifiesEmails;
+    use VerifiesEmails {
+        verify as laravelVerify;
+    }
 
     /**
      * Where to redirect users after verification.
@@ -37,6 +41,50 @@ class VerificationController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
-        $this->middleware('throttle:6,1')->only('verify', 'resend');
+        $this->middleware('throttle:3,1')->only('verify', 'send', 'resend');
+    }
+
+    /**
+     * Envia o e-mail de confirmação para o e-mail do usuário
+     *
+     * @param Illuminate\Http\Request $request
+     *
+     * @return Illuminate\Http\RedirectResponse
+     **/
+    public function send(Request $request)
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            \Helper::flash([
+                'type' => 'info', 'message' => 'Seu e-mail já é verificado!'
+            ]);
+
+            return back();
+        }
+
+       $request->user()->sendEmailVerificationNotification();
+
+        \Helper::flash([
+            'type' => 'success', 'message' => 'E-mail de verificação enviado'
+        ]);
+
+        return back();
+    }
+
+    /**
+     * Marca o e-mail como verificado com sucesso.
+     *
+     * @param Illuminate\Foundation\Auth\EmailVerificationRequest $request
+     *
+     * @return Illuminate\Http\RedirectResponse
+     **/
+    public function verify(EmailVerificationRequest $request)
+    {
+        $request->fulfill();
+
+        \Helper::flash([
+            'type' => 'success', 'message' => 'Parabéns, sua conta foi verificada com sucesso!'
+        ]);
+
+        return redirect()->route('clients.index');
     }
 }

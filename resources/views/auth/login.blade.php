@@ -50,6 +50,10 @@
                 </button>
               </form>
             </login-form>
+
+          </div>
+          <div class="mt-2 small">
+            <a href="{{ route('password.request') }}">Esqueci minha senha</a>
           </div>
         </div>
       </div>

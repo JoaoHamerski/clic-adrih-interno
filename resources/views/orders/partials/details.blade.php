@@ -26,7 +26,11 @@
 
     <div class="{{ $order->isPaid() ? 'text-success' : 'text-danger'}}">
       <h6 class="font-weight-bold mb-1">Faltar pagar: </h6>
-      {{ Mask::money($order->getTotalOwing()) }}
+      @if ($order->isPaid())
+        Já pago
+      @else
+        {{ Mask::money($order->getTotalOwing()) }}
+      @endif
     </div>
 
     <div class="{{ $order->getTotalPaid() > 0 ? 'text-success' : '' }}">

@@ -9,7 +9,7 @@ class Payment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['value', 'note', 'date'];
+    protected $fillable = ['installment_id', 'value', 'note', 'date'];
 
     public function order()
     {

@@ -1,4 +1,4 @@
-<modal id="modalPayment" color="primary">
+<modal id="modalPayment" color="primary" modal-dialog-class="modal-dialog-md">
   <template #header>
     <i class="fas fa-dollar-sign fa-fw"></i>
     Efetuar pagamento
@@ -6,7 +6,7 @@
 
   <template #body>
   <div class="modal-body px-0">
-    <order-installments inline-template>
+    <order-installments-form inline-template>
     <div class="position-relative">
       <div v-if="isLoading" class="loading">
         <div class="spinner-grow text-primary" role="status"></div>
@@ -24,26 +24,72 @@
         <tbody>
           <template v-for="(installment, index) in installments">
           <tr :class="{ 'table-success' : installment.paid_at }">
-            <td>
+            <td class="align-middle">
               @{{ $helpers.formatMoney(installment.value) }}
+              <span class="small text-muted no-wrap d-block" 
+                v-if="! installment.paid_at && installment.total_paid > 0">
+                (@{{ $helpers.formatMoney(installment.total_paid) }} já pago)
+              </span>
             </td>
 
-            <td class="text-center">
+            <td class="text-center align-middle">
               @{{ this.moment(installment.due_date).format('DD/MM/YYYY') }}
             </td>
 
-            <td class="text-center">
-              <div v-if="installment.paid_at">
-                <span class="d-inline-block disabled-tooltip" data-toggle="tooltip" title="Parcela já foi paga">
-                  <button disabled="disabled" class="btn btn-success">Pagar</button>
-                </span>
+            <td>
+              <div class="d-flex flex-column flex-md-row justify-content-between" 
+              v-if="installment.paid_at">
+                <button disabled="disabled" 
+                  class="btn btn-success mr-2 mx-auto mb-2 mb-md-0 no-wrap">
+                  Pagar total
+                </button>
+
+                <button disabled="disabled" class="btn btn-outline-primary no-wrap">
+                  Pagar parcial
+                </button>
               </div>
 
-              <div v-else>
-                  <button class="btn btn-success" 
+              <div class="d-flex flex-column flex-md-row justify-content-between" v-else>
+                <button class="btn btn-success mr-2 no-wrap mx-auto mb-2 mb-md-0" 
                   @click.prevent="payInstallment(index, installment.id)">
-                    Pagar
-                  </button>
+                  Pagar total
+                </button>
+
+                <button v-if="! installment.enableForm" class="btn btn-outline-primary no-wrap"
+                  @click.prevent="installment.enableForm = true">
+                  Pagar parcial
+                </button>
+
+                <button v-else class="btn btn-outline-secondary"
+                  @click.prevent="installment.enableForm = false">Cancelar
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr v-if="installment.enableForm">
+            <td style="border-top: none" colspan="3">
+              <div @focus.capture="installment.error = ''" class="d-flex justify-content-between">
+                <md-input class="mb-0 col px-0"
+                  @keypress.enter.native="payParcialInstallment(index, installment.id)"
+                  name="value"
+                  autocomplete="off"
+                  label="Valor parcial" 
+                  v-model="installment.parcialValue"
+                  :input-group="true"
+                  :mask="$masks.valueBRL"
+                  :error-message="installment.error">
+                    <template #input-append>
+                      <div class="input-group-append">
+                        <button :disabled="installment.isLoading" class="btn btn-outline-primary"
+                          @click.prevent="payParcialInstallment(index, installment.id)">
+                          <span v-if="installment.isLoading" class="spinner-border spinner-border-sm"></span>
+                          Pagar
+                        </button>
+                      </div>
+                    </template>
+                  </md-input>
+                
               </div>
             </td>
           </tr>

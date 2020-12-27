@@ -23,14 +23,14 @@
                 data-placement="bottom" 
                 data-toggle="tooltip" 
                 title="Não é possível efetuar pagamentos para pedidos já pagos">
-                <button class="btn btn-block btn-primary" disabled="disabled">
+                <button class="btn btn-block btn-success" disabled="disabled">
                   <i class="fas fa-dollar-sign fa-fw mr-1"></i> Efetuar pagamento
                 </button>
               </span>
 
               @else
               
-              <button class="btn btn-block btn-primary" 
+              <button class="btn btn-block btn-success" 
                 data-toggle="modal" 
                 data-target="#modalPayment">
                 <i class="fas fa-dollar-sign fa-fw mr-1"></i> Efetuar pagamento

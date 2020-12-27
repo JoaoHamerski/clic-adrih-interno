@@ -125,7 +125,9 @@ class OrdersController extends Controller
     public function getOrder(Client $client, Order $order)
     {       
         return $client->orders()
-            ->with('installments')
+            ->with(['installments' => function($hasMany) {
+                $hasMany->with('payments');
+            }])
             ->find($order->id);
     }
 

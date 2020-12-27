@@ -1,65 +1,54 @@
 @extends('layouts.app')
 
+@section('title', 'Redefinir senha - ')
+
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+	<div class="col-md-5 mx-auto mt-5">
+		<div class="card">
+			<div class="card-header bg-primary text-white">
+				<h6 class="font-weight-bold mb-0">Redefina sua senha</h6>
+			</div>
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+			<div class="card-body">
+				<div class="text-center mb-4 text-dark">
+					<i class="fas fa-unlock-alt fa-4x"></i>
+				</div>
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+				<reset-password-form inline-template>
+					<form @submit.prevent="onSubmit"
+						@keypress.prevent.enter="onSubmit"
+						@focus.capture="clear($event.target.name)">
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+						<input ref="token" type="hidden" name="token" value="{{ $token }}">
+						
+						<md-input name="email" 
+		                  label="E-mail"
+		                  v-model="form.email"
+		                  :disabled="true"
+		                  :error-message="form.errors.get('email')"></md-input>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+	                 	<md-input
+		                  name="password" 
+		                  label="Nova senha" 
+		                  type="password"
+		                  :autofocus="true"
+		                  v-model="form.password"
+		                  :error-message="form.errors.get('password')"></md-input>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+		                <md-input
+		                  name="password_confirmation" 
+		                  label="Confirme a senha" 
+		                  type="password"
+		                  v-model="form.password_confirmation"></md-input>
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+		                <button :disabled="form.isLoading" class="btn btn-block btn-primary font-weight-bold">
+                 			<span v-if="form.isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+		                	Alterar senha
+		                </button>
+					</form>
+				</reset-password-form>
+			</div>
+		</div>
+	</div>
 @endsection

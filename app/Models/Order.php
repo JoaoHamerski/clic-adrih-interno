@@ -47,15 +47,16 @@ class Order extends Model
 
     public function getTotalPaid()
     {
-       return sprintf('%.2f', $this->payments()->sum('value'), 2);
+       return $this->payments()->sum('value');
     }
+
     public function getTotalOwing()
     {
-        return sprintf('%.2f', $this->price) - $this->getTotalPaid();
+        return abs(sprintf('%.2f', bcsub($this->price, $this->getTotalPaid(), 4)));
     }
 
     public function isPaid()
     {
-        return $this->getTotalPaid() >= sprintf('%.2f', $this->price);
+        return $this->getTotalOwing() <= 0;
     }
 }

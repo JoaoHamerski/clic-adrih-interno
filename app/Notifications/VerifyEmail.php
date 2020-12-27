@@ -43,16 +43,16 @@ class VerifyEmail extends LaravelVerifyEmail
      */
     public function toMail($notifiable)
     {
-        $verificationUrl = $this->verificationUrl($notifiable);
+        $url = $this->verificationUrl($notifiable);
 
         if (static::$toMailCallback) {
-            return call_user_func(static::$toMailCallback, $notifiable, $verificationUrl);
+            return call_user_func(static::$toMailCallback, $notifiable, $url);
         }
 
         return (new MailMessage)
             ->subject('Email de verificação')
             ->markdown('emails.account-validation', [
-                'verificationUrl' => $verificationUrl
+                'url' => $url
             ]);
     }
 
@@ -76,18 +76,5 @@ class VerifyEmail extends LaravelVerifyEmail
                 'hash' => sha1($notifiable->getEmailForVerification()),
             ]
         );
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
     }
 }

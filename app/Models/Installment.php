@@ -10,6 +10,7 @@ class Installment extends Model
 {
     use HasFactory, HasSyncRelation;
 
+    public $appends = ['total_remaining', 'total_paid'];
     protected $fillable = ['value', 'due_date', 'paid_at', 'note'];
 
     public function order()
@@ -17,9 +18,19 @@ class Installment extends Model
     	return $this->belongsTo(Order::class);
     }
 
-    public function payment()
+    public function payments()
     {
-    	return $this->hasOne(Payment::class);
+    	return $this->hasMany(Payment::class);
+    }
+
+    public function getTotalPaidAttribute()
+    {
+        return $this->payments()->sum('value');
+    }
+
+    public function getTotalRemainingAttribute()
+    {
+        return bcsub($this->value, $this->total_paid, 4);
     }
 
     public function isExpired()

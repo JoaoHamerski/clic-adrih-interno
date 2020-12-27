@@ -9,6 +9,9 @@ use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\MyAccountController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,13 +26,33 @@ use App\Http\Controllers\Auth\LoginController;
 
 // Auth::routes();
 
+Route::name('password.')->middleware('guest')->group(function() {
+  Route::get('/esqueci-minha-senha', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('request');
+  Route::post('/esqueci-minha-senha', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('email');
+  Route::get('/redefinir-senha/{token}', [ResetPasswordController::class, 'showResetForm'])->name('reset');
+  Route::post('/redefinir-senha', [ResetPasswordController::class, 'reset'])->name('update');
+});
+
+// Rotas de autenticação
+Route::name('auth.')->group(function() {
+  Route::middleware('guest')->group(function() {
+    Route::get('/entrar', [LoginController::class, 'showLoginForm'])->name('showLoginForm');
+    Route::post('/entrar', [LoginController::class, 'login'])->name('login');
+  });
+
+  Route::middleware('auth')->group(function() {
+    Route::get('/sair', [LoginController::class, 'logout'])->name('logout');
+  });
+});
+
+// Route::get('email', [EmailController::class, 'preview']);
+
 Route::middleware('auth')->group(function() {
   Route::get('/', [HomeController::class, 'index'])->name('home');
-  // Route::get('email', [EmailController::class, 'preview']);
-  
+
   Route::name('email.')->prefix('email')->group(function() {
-   Route::get('/verificar/{id}/{hash}', [EmailController::class, 'verifyEmail'])->middleware('signed')->name('verify');
-    Route::get('/verificar', [EmailController::class, 'sendVerificationEmail'])->name('send-verify');
+   Route::get('/verificar/{id}/{hash}', [VerificationController::class, 'verify'])->middleware('signed')->name('verify');
+    Route::get('/verificar', [VerificationController::class, 'send'])->name('send-verify');
   });
 
   Route::name('my-account.')->group(function() {
@@ -63,18 +86,7 @@ Route::middleware('auth')->group(function() {
 
   Route::name('payments.')->group(function() {
     Route::post('/clientes/{client}/pedidos/{order}/parcela/{installment}/pagar', [InstallmentsController::class, 'pay']);
+    Route::post('/clientes/{client}/pedidos/{order}/parcela/{installment}/pagar-parcial', [InstallmentsController::class, 'payParcial']);
     Route::post('/clientes/{client}/pedidos/{order}/pagar', [PaymentsController::class, 'store']);
-  });
-});
-
-// Rotas de autenticação
-Route::name('auth.')->group(function() {
-  Route::middleware('guest')->group(function() {
-    Route::get('/entrar', [LoginController::class, 'showLoginForm'])->name('showLoginForm');
-    Route::post('/entrar', [LoginController::class, 'login'])->name('login');
-  });
-
-  Route::middleware('auth')->group(function() {
-    Route::get('/sair', [LoginController::class, 'logout'])->name('logout');
   });
 });

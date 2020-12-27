@@ -33,12 +33,14 @@
 		                  type="password"
 		                  :autofocus="true"
 		                  v-model="form.password"
+		                  autocomplete="new-password"
 		                  :error-message="form.errors.get('password')"></md-input>
 
 		                <md-input
 		                  name="password_confirmation" 
 		                  label="Confirme a senha" 
 		                  type="password"
+		                  autocomplete="new-password_confirmation"
 		                  v-model="form.password_confirmation"></md-input>
 
 		                <button :disabled="form.isLoading" class="btn btn-block btn-primary font-weight-bold">
